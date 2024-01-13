@@ -11,8 +11,22 @@
   </head>
   <body>
     <h1>Hello-Bootstrap</h1>
-    <div class="container">
-      <div class="row" id="books"></div>
+    <div class="contenitore d-flex">
+      <div class="w-25 bg-dark" id="cart">
+        <div class="text-light m-2">
+          <h5 class="text-center">Carrello</h5>
+          <div class="d-flex justify-content-between">
+            <p id="totale-libri">Totale Libri:</p>
+            <input type="submit" class="btn btn-success" value="Svuota" id="svuota" onclick="svuotaCarrello()" />
+          </div>
+
+          <p id="lista-libri">Libri aggiunti:</p>
+          <ul class="text-warning" id="lista"></ul>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row d-flex gy-5 justify-content-between" id="books"></div>
+      </div>
     </div>
     <script src="./script.js"></script>
   </body>

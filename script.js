@@ -1,42 +1,95 @@
 const url = `https://striveschool-api.herokuapp.com/books`;
-let arrayFetch = [];
-let nrCard = [];
-const fetchFunct = () => {
+
+let arrayLibri = [];
+let carrello = [];
+let indexCreazione;
+let indexLettura;
+
+const buttons = document.querySelectorAll("input");
+const divContenitoreLibri = document.getElementById("books");
+const divContenitoreCart = document.getElementById("cart");
+const ul = document.getElementById("lista");
+
+window.onload = fetchFunct = () => {
   fetch(url, {})
     .then((resp) => resp.json())
-    .then((cacca) => {
-      arrayFetch = cacca;
-      for (let i = 0; i < cacca.length; i++) {
-        divContenitore.innerHTML += `<div class="card" style="width: 18rem">
-  <img src="${cacca[i].img}" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h5 class="card-title">${cacca[i].title}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${cacca[i].category}</h6>
-    <input type="submit" value="aggiungi">
-    </div>`;
-      }
+    .then((libri) => {
+      arrayLibri = libri;
+
+      creaCard(arrayLibri);
     })
     .catch((e) => {
       console.log(e);
     });
 };
 
-fetchFunct();
-
-const divContenitore = document.getElementById("books");
-
-function creaCard() {
-  // for (let i = 0; i < nrCard.length; i++) {
-  //   divContenitore.innerHTML += `<div class="card" style="width: 18rem">
-  // <img src="${{ nrCard }.img}" class="card-img-top" alt="..." />
-  // <div class="card-body">
-  //   <h5 class="card-title">${nrCard.title}</h5>
-  //   <h6 class="card-subtitle mb-2 text-muted">${nrCard.category}</h6>
-  //   <input type="submit" placeholder="Aggiungi">
-  //   b5
-  // </div>`;
-  //   console.log(nrCard);
-  // }
+function creaCard(arrayLibri) {
+  arrayLibri.map((x, indexCreazione) => {
+    indexCreazione + 1;
+    divContenitoreLibri.innerHTML += `<div class="card" style="width: 18rem" id="card-${indexCreazione}">
+  <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}">aggiunto</p></div>
+  <div class="card-body" id="card-body-${indexCreazione}">
+    <h5 class="card-title">${x.title}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
+    <div class="d-grid gap-3">
+    <button class="btn btn-secondary" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+    <button class="btn btn-secondary" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
+    </div>
+    </div>`;
+  });
 }
 
-creaCard(arrayFetch);
+function operazioni(e) {
+  const { target } = e;
+  //mi prendo l'indice x poter gestire le diverse card
+  indexLettura = target.id.split("-");
+
+  //se il mio target ha un id che include add do per scontato che sia il pulsante aggiungi altrimenti elimina, cosi mi getisco le due operazioni
+  if (target.id.includes("add")) {
+    const badge = document.querySelector(`#badge-${indexLettura[1]}`);
+    const card = document.querySelector(`#card-${indexLettura[1]}`);
+    const cardBody = document.querySelector(`#card-body-${indexLettura[1]}`);
+    console.log(cardBody);
+    card.classList.add("cardSelezionata");
+    cardBody.classList.add("d-none");
+    badge.classList.remove("d-none");
+    aggiungiLibroAlCarrello(arrayLibri[indexLettura[1]].title, arrayLibri[indexLettura[1]].category, indexLettura[1]);
+    renderCarrello();
+  } else {
+    document.querySelector(`#card-${indexLettura[1]}`).style.display = "none";
+    console.log("cancellato");
+  }
+}
+
+function aggiungiLibroAlCarrello(titolo, categoria, index) {
+  // libriNelCarrello.title = titolo;
+  // libriNelCarrello.category = categoria;
+  const libriNelCarrello = { title: titolo, category: categoria, id: index };
+
+  carrello.push(libriNelCarrello);
+}
+
+function renderCarrello() {
+  const lista = document.createElement("li");
+  carrello.forEach((x) => {
+    lista.textContent = x.title;
+    ul.appendChild(lista);
+  });
+
+  console.log(lista);
+}
+
+function svuotaCarrello() {
+  const ul = document.getElementById("lista");
+  ul.innerHTML = "";
+
+  carrello.forEach((x) => {
+    const card = document.querySelector(`#card-${x.id}`);
+    const cardBody = document.querySelector(`#card-body-${x.id}`);
+    const badge = document.querySelector(`#badge-${x.id}`);
+    card.classList.remove("cardSelezionata");
+    cardBody.classList.remove("d-none");
+    badge.classList.add("d-none");
+    carrello = [];
+  });
+}

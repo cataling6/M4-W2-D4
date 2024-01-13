@@ -4,3 +4,20 @@
   object-fit: cover;
   aspect-ratio: 1/1;
 }
+.card {
+  transition: 1s;
+}
+
+.contenitore {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cardSelezionata {
+  border: 1px solid #3e3434 !important;
+  background: #d2d2d2 !important;
+  height: 200px;
+  overflow: hidden;
+  transition: 1s;
+}
