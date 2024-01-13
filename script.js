@@ -8,6 +8,7 @@ let indexLettura;
 const buttons = document.querySelectorAll("input");
 const divContenitoreLibri = document.getElementById("books");
 const divContenitoreCart = document.getElementById("cart");
+const totaleLibri = document.getElementById("totale-libri");
 const ul = document.getElementById("lista");
 
 window.onload = fetchFunct = () => {
@@ -15,8 +16,7 @@ window.onload = fetchFunct = () => {
     .then((resp) => resp.json())
     .then((libri) => {
       arrayLibri = libri;
-
-      creaCard(arrayLibri);
+      creaCard(libri);
     })
     .catch((e) => {
       console.log(e);
@@ -28,12 +28,12 @@ function creaCard(arrayLibri) {
     indexCreazione + 1;
     divContenitoreLibri.innerHTML += `<div class="card" style="width: 18rem" id="card-${indexCreazione}">
   <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}">aggiunto</p></div>
-  <div class="card-body" id="card-body-${indexCreazione}">
+  <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
     <h5 class="card-title">${x.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
-    <div class="d-grid gap-3">
-    <button class="btn btn-secondary" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-    <button class="btn btn-secondary" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
+    <div class="d-flex flex-column mb-2 gap-2">
+    <button class="btn btn-secondary btn-sm" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+    <button class="btn btn-secondary btn-sm" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
   });
@@ -75,13 +75,14 @@ function renderCarrello() {
     lista.textContent = x.title;
     ul.appendChild(lista);
   });
-
+  totaleLibri.innerText = ` ${carrello.length}`;
   console.log(lista);
 }
 
 function svuotaCarrello() {
   const ul = document.getElementById("lista");
   ul.innerHTML = "";
+  totaleLibri.innerText = "";
 
   carrello.forEach((x) => {
     const card = document.querySelector(`#card-${x.id}`);
@@ -92,4 +93,10 @@ function svuotaCarrello() {
     badge.classList.add("d-none");
     carrello = [];
   });
+}
+
+function cercaLibro() {
+  const cercaTitolo = document.getElementById("cercaTitolo");
+  console.log(cercaTitolo.value);
+  //arrayLibri.filter(x=> x.title.includes(cercaTitolo.value))
 }

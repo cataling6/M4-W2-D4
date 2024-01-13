@@ -5,7 +5,7 @@
   aspect-ratio: 1/1;
 }
 .card {
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .contenitore {
@@ -15,9 +15,9 @@
 }
 
 .cardSelezionata {
-  border: 1px solid #3e3434 !important;
+  border: 2px solid #3e3434 !important;
+
   background: #d2d2d2 !important;
-  height: 200px;
+  height: 232px;
   overflow: hidden;
-  transition: 1s;
 }
