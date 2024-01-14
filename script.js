@@ -107,3 +107,42 @@ function operazioni(e) {
     console.log("cancellato");
   }
 }
+function aggiungiLibroAlCarrello(titolo, categoria, index) {
+  // libriNelCarrello.title = titolo;
+  // libriNelCarrello.category = categoria;
+  const libriNelCarrello = { title: titolo, category: categoria, id: index };
+
+  carrello.push(libriNelCarrello);
+}
+
+function renderCarrello() {
+  const lista = document.createElement("li");
+  carrello.forEach((x) => {
+    lista.textContent = x.title;
+    ul.appendChild(lista);
+  });
+  totaleLibri.innerText = ` ${carrello.length}`;
+  console.log(lista);
+}
+
+function svuotaCarrello() {
+  const ul = document.getElementById("lista");
+  ul.innerHTML = "";
+  totaleLibri.innerText = "";
+
+  carrello.forEach((x) => {
+    const card = document.querySelector(`#card-${x.id}`);
+    const cardBody = document.querySelector(`#card-body-${x.id}`);
+    const badge = document.querySelector(`#badge-${x.id}`);
+    card.classList.remove("cardSelezionata");
+    cardBody.classList.remove("d-none");
+    badge.classList.add("d-none");
+    carrello = [];
+  });
+}
+
+function cercaLibro() {
+  const cercaTitolo = document.getElementById("cercaTitolo");
+  console.log(cercaTitolo.value);
+  //arrayLibri.filter(x=> x.title.includes(cercaTitolo.value))
+}
