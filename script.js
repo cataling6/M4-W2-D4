@@ -1,17 +1,18 @@
+import { generaCard, indexCreazione, divContenitoreLibri, creaCard } from "./card.js";
+
 const url = `https://striveschool-api.herokuapp.com/books`;
 
 let arrayLibri = [];
 let carrello = [];
-let indexCreazione;
 let indexLettura;
 
 const buttons = document.querySelectorAll("input");
-const divContenitoreLibri = document.getElementById("books");
+
 const divContenitoreCart = document.getElementById("cart");
 const totaleLibri = document.getElementById("totale-libri");
 const ul = document.getElementById("lista");
 
-window.onload = fetchFunct = () => {
+function fetchFunct() {
   fetch(url, {})
     .then((resp) => resp.json())
     .then((libri) => {
@@ -21,23 +22,8 @@ window.onload = fetchFunct = () => {
     .catch((e) => {
       console.log(e);
     });
-};
-
-function creaCard(libri) {
-  libri.map((x, indexCreazione) => {
-    indexCreazione + 1;
-    divContenitoreLibri.innerHTML += `<div class="card" style="width: 18rem" id="card-${indexCreazione}">
-  <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}">aggiunto</p></div>
-  <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
-    <h5 class="card-title">${x.title}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
-    <div class="d-flex flex-column ">
-    <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-    <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
-    </div>
-    </div>`;
-  });
 }
+window.onload = fetchFunct();
 
 //mi prendo il value della text ed a seconda del nr caratteri (switch) esco uno o  l'altro risultato
 function cercaLibro() {
