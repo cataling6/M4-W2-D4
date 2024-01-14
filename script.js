@@ -31,17 +31,19 @@ function creaCard(libri) {
   <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
     <h5 class="card-title">${x.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
-    <div class="d-flex flex-column mb-2 gap-2">
-    <button class="btn btn-secondary btn-sm" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-    <button class="btn btn-secondary btn-sm" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
+    <div class="d-flex flex-column ">
+    <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+    <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
   });
 }
 
+//mi prendo il value della text ed a seconda del nr caratteri (switch) esco uno o  l'altro risultato
 function cercaLibro() {
   const cercaTitolo = document.getElementById("cercaTitolo");
   const find = arrayLibri.filter((x) => x.title.toLowerCase().includes(cercaTitolo.value));
+
   switch (true) {
     case cercaTitolo.value.length > 3:
       divContenitoreLibri.innerHTML = "";
@@ -68,15 +70,15 @@ function cercaLibro() {
         indexCreazione = 0;
         indexCreazione + 1;
         divContenitoreLibri.innerHTML += `<div class="card" style="width: 18rem" id="card-${indexCreazione}">
-    <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}">aggiunto</p></div>
-    <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
-      <h5 class="card-title">${x.title}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
-      <div class="d-flex flex-column mb-2 gap-2">
-      <button class="btn btn-secondary btn-sm" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-      <button class="btn btn-secondary btn-sm" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
-      </div>
-      </div>`;
+        <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}">aggiunto</p></div>
+        <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
+          <h5 class="card-title">${x.title}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
+          <div class="d-flex flex-column mb-2 gap-2">
+          <button class="btn btn-secondary btn-sm" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+          <button class="btn btn-secondary btn-sm" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
+          </div>
+          </div>`;
       });
     default:
       alert("sono richiesti almeno 4 caratteri per la ricerca");
@@ -84,6 +86,7 @@ function cercaLibro() {
   }
 }
 
+//valuto in un'unica funzione il pulsante cliccato, richiamata da html: ho provato implementare l'addEventListener ma per poco tempo a disposizione, preferisco usare questo metodo
 function operazioni(e) {
   const { target } = e;
 
@@ -108,25 +111,27 @@ function operazioni(e) {
   }
 }
 function aggiungiLibroAlCarrello(titolo, categoria, index) {
-  // libriNelCarrello.title = titolo;
-  // libriNelCarrello.category = categoria;
   const libriNelCarrello = { title: titolo, category: categoria, id: index };
 
   carrello.push(libriNelCarrello);
 }
 
+//mi aggiungo i titoli del libro selezionato facendo appendchild id un nuovo "li"
 function renderCarrello() {
   const lista = document.createElement("li");
+
   carrello.forEach((x) => {
     lista.textContent = x.title;
     ul.appendChild(lista);
   });
+
   totaleLibri.innerText = ` ${carrello.length}`;
-  console.log(lista);
 }
 
+//resetto tutte le variabili che ho usato per costruire il carrello
 function svuotaCarrello() {
   const ul = document.getElementById("lista");
+
   ul.innerHTML = "";
   totaleLibri.innerText = "";
 
@@ -134,15 +139,10 @@ function svuotaCarrello() {
     const card = document.querySelector(`#card-${x.id}`);
     const cardBody = document.querySelector(`#card-body-${x.id}`);
     const badge = document.querySelector(`#badge-${x.id}`);
+
     card.classList.remove("cardSelezionata");
     cardBody.classList.remove("d-none");
     badge.classList.add("d-none");
     carrello = [];
   });
-}
-
-function cercaLibro() {
-  const cercaTitolo = document.getElementById("cercaTitolo");
-  console.log(cercaTitolo.value);
-  //arrayLibri.filter(x=> x.title.includes(cercaTitolo.value))
 }
