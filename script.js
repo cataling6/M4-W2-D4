@@ -1,3 +1,6 @@
+//premetto che a livello di pulizia codice sono consapevole faccia schifo; vorrei approffondire il discorso moduli, in realtàa a compito finito ho
+//provato ad implementare i moduli, ci sono riuscito ma riscontravo problemi con operazioni(e), ho visto che era un casino atroce e l'ho lasciato perdere
+
 const url = `https://striveschool-api.herokuapp.com/books`;
 
 let arrayLibri = [];
@@ -41,6 +44,7 @@ function creaCard(libri) {
   });
 }
 
+//aggiunto evento x pulsante invio
 cercaTitolo.addEventListener("keydown", pressed);
 
 function pressed(e) {
@@ -49,6 +53,7 @@ function pressed(e) {
   }
 }
 
+//valuto le due casistiche per la ricerca ed a seconda del risultato, genero le card
 function cercaLibro() {
   const cercaTitolo = document.getElementById("cercaTitolo");
   const find = arrayLibri.filter((x) => x.title.toLowerCase().includes(cercaTitolo.value));
@@ -71,6 +76,7 @@ function cercaLibro() {
       </div>`;
       });
       break;
+
     case cercaTitolo.value.length == 0:
       divContenitoreLibri.innerHTML = "";
 
@@ -88,6 +94,8 @@ function cercaLibro() {
       </div>
       </div>`;
       });
+      break;
+
     default:
       alert("sono richiesti almeno 4 caratteri per la ricerca");
       break;
@@ -123,18 +131,21 @@ function aggiungiLibroAlCarrello(titolo, categoria, index) {
   carrello.push(libriNelCarrello);
 }
 
+//creo la parte del carrello inserendo "li" ogni volta che clicco su aggiungi; sempre qui aggiorno anche il totale libri
 function renderCarrello() {
   const lista = document.createElement("li");
+
   carrello.forEach((x) => {
     lista.textContent = x.title;
     ul.appendChild(lista);
   });
+
   totaleLibri.innerText = ` ${carrello.length}`;
-  console.log(lista);
 }
 
 function svuotaCarrello() {
   const ul = document.getElementById("lista");
+
   ul.innerHTML = "";
   totaleLibri.innerText = "";
 
