@@ -2,7 +2,7 @@
 //provato ad implementare i moduli, ci sono riuscito ma riscontravo problemi con operazioni(e), ho visto che era un casino atroce e l'ho lasciato perdere
 
 const url = `https://striveschool-api.herokuapp.com/books`;
-
+let arrayPrezzo = [];
 let arrayLibri = [];
 let carrello = [];
 let indexCreazione;
@@ -12,6 +12,7 @@ const buttons = document.querySelectorAll("input");
 const divContenitoreLibri = document.getElementById("books");
 const divContenitoreCart = document.getElementById("cart");
 const totaleLibri = document.getElementById("totale-libri");
+const totaleEuro = document.getElementById("totale-euro");
 const ul = document.getElementById("lista");
 const svuota = document.getElementById("svuota");
 
@@ -37,6 +38,7 @@ function creaCard(libri) {
     <h5 class="card-title">${x.title}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
     <div class="d-flex flex-column mb-2 gap-2">
+    <p>Prezzo: ${x.price} €</p>
     <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
     <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
@@ -70,6 +72,7 @@ function cercaLibro() {
       <h5 class="card-title">${x.title}</h5>
       <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
       <div class="d-flex flex-column mb-2 gap-2">
+      <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
@@ -89,6 +92,7 @@ function cercaLibro() {
       <h5 class="card-title">${x.title}</h5>
       <h6 class="card-subtitle mb-2 text-muted">${x.category}</h6>
       <div class="d-flex flex-column mb-2 gap-2">
+      <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
@@ -118,15 +122,15 @@ function operazioni(e) {
     cardBody.classList.add("d-none");
     badge.classList.remove("d-none");
 
-    aggiungiLibroAlCarrello(arrayLibri[indexLettura[1]].title, arrayLibri[indexLettura[1]].category, indexLettura[1]);
+    aggiungiLibroAlCarrello(arrayLibri[indexLettura[1]].title, arrayLibri[indexLettura[1]].price, indexLettura[1]);
     renderCarrello();
   } else {
     document.querySelector(`#card-${indexLettura[1]}`).style.display = "none";
     console.log("cancellato");
   }
 }
-function aggiungiLibroAlCarrello(titolo, categoria, index) {
-  const libriNelCarrello = { title: titolo, category: categoria, id: index };
+function aggiungiLibroAlCarrello(titolo, prezzo, index) {
+  const libriNelCarrello = { title: titolo, price: prezzo, id: index };
 
   carrello.push(libriNelCarrello);
 }
@@ -138,9 +142,13 @@ function renderCarrello() {
   carrello.forEach((x) => {
     lista.textContent = x.title;
     ul.appendChild(lista);
+    arrayPrezzo.push(x.price);
   });
 
+  let totale = arrayPrezzo.reduce((acc, curr) => acc + curr);
+
   totaleLibri.innerText = ` ${carrello.length}`;
+  totaleEuro.innerText = ` ${totale.toFixed(2)}`;
 }
 
 function svuotaCarrello() {
@@ -156,6 +164,8 @@ function svuotaCarrello() {
     card.classList.remove("cardSelezionata");
     cardBody.classList.remove("d-none");
     badge.classList.add("d-none");
+    totaleEuro.innerText = "";
     carrello = [];
+    arrayPrezzo = [];
   });
 }
