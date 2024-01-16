@@ -40,6 +40,7 @@ function creaCard(libri) {
     <div class="d-flex flex-column mb-2 gap-2">
     <p>Prezzo: ${x.price} €</p>
     <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+    <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" id=>dettagli</button>
     <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
@@ -74,6 +75,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+      <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" id=>dettagli</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
@@ -94,6 +96,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+      <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" id=>dettagli</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
