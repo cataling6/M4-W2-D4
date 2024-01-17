@@ -1,13 +1,13 @@
 //premetto che a livello di pulizia codice sono consapevole faccia schifo; vorrei approffondire il discorso moduli, in realtàa a compito finito ho
 //provato ad implementare i moduli, ci sono riuscito ma riscontravo problemi con operazioni(e), ho visto che era un casino atroce e l'ho lasciato perdere
-import { dettagli } from "./details.js";
+//import { dettagli } from "./details.js";
 const url = `https://striveschool-api.herokuapp.com/books`;
 let arrayPrezzo = [];
 let arrayLibri = [];
 let carrello = [];
 let indexCreazione;
 let indexLettura;
-
+window.svuotaCarrello = svuotaCarrello;
 const buttons = document.querySelectorAll("input");
 const divContenitoreLibri = document.getElementById("books");
 const divContenitoreCart = document.getElementById("cart");
@@ -40,7 +40,7 @@ function creaCard(libri) {
     <div class="d-flex flex-column mb-2 gap-2">
     <p>Prezzo: ${x.price} €</p>
     <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-    <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
+    <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
     <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
@@ -75,7 +75,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-          <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
+      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
@@ -96,13 +96,13 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-      <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
+      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
       });
       break;
-
+    //<button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
     default:
       alert("sono richiesti almeno 4 caratteri per la ricerca");
       break;
@@ -115,7 +115,7 @@ function operazioni(e) {
   const cardId = target.closest(".card").id;
   const index = cardId.split("-")[1];
   const selectedBook = arrayLibri[index];
-
+  console.log(target);
   //se il mio target ha un id che include add do per scontato che sia il pulsante aggiungi altrimenti elimina, cosi mi getisco le due operazioni
   if (target.matches(`#add-${index}`)) {
     const badge = document.querySelector(`#badge-${index}`);
@@ -131,7 +131,7 @@ function operazioni(e) {
   } else if (target.matches(`#del-${index}`)) {
     document.querySelector(`#card-${index}`).style.display = "none";
   } else if (target.matches(`#det-${index}`)) {
-    dettagli(selectedBook.asin);
+    // dettagli(selectedBook.asin, indexCreazione);
   }
   console.log(target);
 }

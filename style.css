@@ -21,3 +21,16 @@
   height: 232px;
   overflow: hidden;
 }
+
+#cardDetail {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: flex;
+  justify-content: center;
+}
+#cardDetail > div > img {
+  object-fit: cover;
+  aspect-ratio: 2/3;
+  width: auto !important;
+  height: auto !important;
+}
