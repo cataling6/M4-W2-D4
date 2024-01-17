@@ -115,7 +115,7 @@ function operazioni(e) {
   const cardId = target.closest(".card").id;
   const index = cardId.split("-")[1];
   const selectedBook = arrayLibri[index];
-  console.log(target);
+
   //se il mio target ha un id che include add do per scontato che sia il pulsante aggiungi altrimenti elimina, cosi mi getisco le due operazioni
   if (target.matches(`#add-${index}`)) {
     const badge = document.querySelector(`#badge-${index}`);
@@ -130,10 +130,7 @@ function operazioni(e) {
     renderCarrello();
   } else if (target.matches(`#del-${index}`)) {
     document.querySelector(`#card-${index}`).style.display = "none";
-  } else if (target.matches(`#det-${index}`)) {
-    // dettagli(selectedBook.asin, indexCreazione);
   }
-  console.log(target);
 }
 function aggiungiLibroAlCarrello(titolo, prezzo, index) {
   const libriNelCarrello = { title: titolo, price: prezzo, id: index };
