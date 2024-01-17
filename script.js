@@ -40,6 +40,7 @@ function creaCard(libri) {
     <div class="d-flex flex-column mb-2 gap-2">
     <p>Prezzo: ${x.price} €</p>
     <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+    <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
     <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
@@ -74,6 +75,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+      <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
@@ -94,6 +96,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
+      <button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
@@ -107,26 +110,27 @@ function cercaLibro() {
 }
 
 function operazioni(e) {
-  const { target } = e;
-
-  //mi prendo l'indice x poter gestire le diverse card
-  indexLettura = target.id.split("-");
+  const target = e.target;
+  const cardId = target.closest(".card").id;
+  const index = cardId.split("-")[1];
+  const selectedBook = arrayLibri[index];
 
   //se il mio target ha un id che include add do per scontato che sia il pulsante aggiungi altrimenti elimina, cosi mi getisco le due operazioni
-  if (target.id.includes("add")) {
-    const badge = document.querySelector(`#badge-${indexLettura[1]}`);
-    const card = document.querySelector(`#card-${indexLettura[1]}`);
-    const cardBody = document.querySelector(`#card-body-${indexLettura[1]}`);
+  if (target.matches(`#add-${index}`)) {
+    const badge = document.querySelector(`#badge-${index}`);
+    const card = document.querySelector(`#card-${index}`);
+    const cardBody = document.querySelector(`#card-body-${index}`);
 
     card.classList.add("cardSelezionata");
     cardBody.classList.add("d-none");
     badge.classList.remove("d-none");
 
-    aggiungiLibroAlCarrello(arrayLibri[indexLettura[1]].title, arrayLibri[indexLettura[1]].price, indexLettura[1]);
+    aggiungiLibroAlCarrello(selectedBook.title, selectedBook.price, index);
     renderCarrello();
-  } else {
-    document.querySelector(`#card-${indexLettura[1]}`).style.display = "none";
-    console.log("cancellato");
+  } else if (target.matches(`#del-${index}`)) {
+    document.querySelector(`#card-${index}`).style.display = "none";
+  } else if (target.matches(`#det-${index}`)) {
+    console.log("vai ai dettagli");
   }
 }
 function aggiungiLibroAlCarrello(titolo, prezzo, index) {
