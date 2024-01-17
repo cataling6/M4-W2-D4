@@ -1,6 +1,6 @@
-//premetto che a livello di pulizia codice sono consapevole faccia schifo; vorrei approffondire il discorso moduli, in realtàa a compito finito ho
-//provato ad implementare i moduli, ci sono riuscito ma riscontravo problemi con operazioni(e), ho visto che era un casino atroce e l'ho lasciato perdere
-//import { dettagli } from "./details.js";
+// questo compito mi ha stremato*; ho sviluppato la parte dei detail con QS passando asin come parametro, a modo mio;
+// non ho ignorato il discorso di modulare però mi sono accorto che debuggare questo compito forse è più doloros che buttarsi
+//dal 3° piano; prossimo compito applicherò i moduli come si deve.
 const url = `https://striveschool-api.herokuapp.com/books`;
 let arrayPrezzo = [];
 let arrayLibri = [];
