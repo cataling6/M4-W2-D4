@@ -1,6 +1,6 @@
 //premetto che a livello di pulizia codice sono consapevole faccia schifo; vorrei approffondire il discorso moduli, in realtàa a compito finito ho
 //provato ad implementare i moduli, ci sono riuscito ma riscontravo problemi con operazioni(e), ho visto che era un casino atroce e l'ho lasciato perdere
-
+import { dettagli } from "./details.js";
 const url = `https://striveschool-api.herokuapp.com/books`;
 let arrayPrezzo = [];
 let arrayLibri = [];
@@ -108,6 +108,7 @@ function cercaLibro() {
       break;
   }
 }
+window.operazioni = operazioni;
 
 function operazioni(e) {
   const target = e.target;
@@ -130,8 +131,9 @@ function operazioni(e) {
   } else if (target.matches(`#del-${index}`)) {
     document.querySelector(`#card-${index}`).style.display = "none";
   } else if (target.matches(`#det-${index}`)) {
-    console.log("vai ai dettagli");
+    dettagli(selectedBook.asin);
   }
+  console.log(target);
 }
 function aggiungiLibroAlCarrello(titolo, prezzo, index) {
   const libriNelCarrello = { title: titolo, price: prezzo, id: index };
