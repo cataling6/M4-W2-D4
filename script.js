@@ -2,6 +2,7 @@
 // non ho ignorato il discorso di modulare però mi sono accorto che debuggare questo compito forse è più doloros che buttarsi
 //dal 3° piano; prossimo compito applicherò i moduli come si deve.
 const url = `https://striveschool-api.herokuapp.com/books`;
+const origin = window.location.origin + (window.location.protocol === "https:" ? "/M4-W2-D4" : "");
 let arrayPrezzo = [];
 let arrayLibri = [];
 let carrello = [];
@@ -40,7 +41,7 @@ function creaCard(libri) {
     <div class="d-flex flex-column mb-2 gap-2">
     <p>Prezzo: ${x.price} €</p>
     <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-    <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
+    <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="${origin}/details.html?id=${x.asin}" target="_blank">dettagli</a>
     <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
     </div>
     </div>`;
