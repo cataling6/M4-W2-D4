@@ -1,4 +1,5 @@
 export let libro = {};
+
 export const fetchFunct = (url, callback) => {
   return fetch(url)
     .then((resp) => resp.json())
@@ -6,6 +7,6 @@ export const fetchFunct = (url, callback) => {
       libro = libri;
     })
     .catch((e) => {
-      console.log(e);
+      console.log("Errore: ", e);
     });
 };

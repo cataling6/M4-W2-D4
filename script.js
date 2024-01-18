@@ -3,12 +3,15 @@
 //dal 3° piano; prossimo compito applicherò i moduli come si deve.
 const url = `https://striveschool-api.herokuapp.com/books`;
 const origin = window.location.origin + (window.location.protocol === "https:" ? "/M4-W2-D4" : "");
+
 let arrayPrezzo = [];
 let arrayLibri = [];
 let carrello = [];
 let indexCreazione;
 let indexLettura;
+
 window.svuotaCarrello = svuotaCarrello;
+
 const buttons = document.querySelectorAll("input");
 const divContenitoreLibri = document.getElementById("books");
 const divContenitoreCart = document.getElementById("cart");
@@ -33,6 +36,7 @@ window.onload = fetchFunct();
 function creaCard(libri) {
   libri.map((x, indexCreazione) => {
     indexCreazione + 1;
+
     divContenitoreLibri.innerHTML += `<div class="card" style="width: 18rem" id="card-${indexCreazione}">
   <div class="d-flex justify-content-between align-items-start mt-3"><img src="${x.img}" class="card-img-top" alt="..." /><p class="badge bg-secondary d-none" id="badge-${indexCreazione}"><i class="bi bi-cart-check"></i> aggiunto</p></div>
   <div class="card-body d-flex flex-column justify-content-between" id="card-body-${indexCreazione}">
@@ -61,6 +65,7 @@ function pressed(e) {
 function cercaLibro() {
   const cercaTitolo = document.getElementById("cercaTitolo");
   const find = arrayLibri.filter((x) => x.title.toLowerCase().includes(cercaTitolo.value));
+
   switch (true) {
     case cercaTitolo.value.length > 3:
       divContenitoreLibri.innerHTML = "";
@@ -76,7 +81,7 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
+      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="${origin}/details.html?id=${x.asin}" target="_blank">dettagli</a>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
@@ -97,13 +102,13 @@ function cercaLibro() {
       <div class="d-flex flex-column mb-2 gap-2">
       <p>Prezzo: ${x.price}</p>
       <button class="btn btn-secondary btn-sm mb-2" id="add-${indexCreazione}" onclick=operazioni(event)>aggiungi al carrello</button>
-      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="/details.html?id=${x.asin}" target="_blank">dettagli</a>
+      <a class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" href="${origin}/details.html?id=${x.asin}" target="_blank">dettagli</a>
       <button class="btn btn-secondary btn-sm mb-2" id="del-${indexCreazione}" onclick=operazioni(event)>elimina</button>
       </div>
       </div>`;
       });
       break;
-    //<button class="btn btn-secondary btn-sm mb-2" id="det-${indexCreazione}" onclick=operazioni(event)>dettagli</button>
+
     default:
       alert("sono richiesti almeno 4 caratteri per la ricerca");
       break;
@@ -165,10 +170,12 @@ function svuotaCarrello() {
     const card = document.querySelector(`#card-${x.id}`);
     const cardBody = document.querySelector(`#card-body-${x.id}`);
     const badge = document.querySelector(`#badge-${x.id}`);
+
     card.classList.remove("cardSelezionata");
     cardBody.classList.remove("d-none");
     badge.classList.add("d-none");
     totaleEuro.innerText = "";
+
     carrello = [];
     arrayPrezzo = [];
   });

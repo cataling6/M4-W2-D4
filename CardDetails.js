@@ -1,7 +1,6 @@
 const cardDetail = document.getElementById("cardDetail");
 
 export function creaCard(libro) {
-  console.log(libro);
   const card = `
   <div class="card" style="width: 18rem" >
   <img src="${libro.img}" class="card-img-top" alt="..." />
@@ -12,5 +11,6 @@ export function creaCard(libro) {
     <p>Prezzo: ${libro.price} €</p>   
     </div>
     </div></div>`;
+
   cardDetail.innerHTML = card;
 }
